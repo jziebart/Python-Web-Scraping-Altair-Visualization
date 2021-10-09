@@ -1,0 +1,19 @@
+import pandas as pd 
+import altair as alt
+
+#1 - load webpage content
+webpage = pd.read_html("http://www.airqualityontario.com/aqhi/search.php?stationid=47045&show_day=0&start_day=12&start_month=8&start_year=2021&submit_search=Get+AQHI+Readings")
+
+#2 - Problem is that the first table is in the way, need second table (= webpage[1]); Na's become 0.0; drop unncessary columns
+date_aqhi = webpage[1].fillna(0.0).drop(columns = ['Time','AQHI.1', 'Category']) 
+
+#3 - Convert'Date' and 'AQHI' column data to appropriate data type
+date_aqhi['Date'] = pd.to_datetime(date_aqhi['Date'])
+date_aqhi['AQHI'] = date_aqhi.AQHI.astype(int)
+date_aqhi
+
+#4 - Create a scatterplot from Date and AQHI columns
+barrie_chart = alt.Chart(date_aqhi).mark_circle(color = "Darkblue", opacity=0.6).encode(
+               x ='Date',
+               y ='AQHI').properties(title = 'Barrie AQHI Levels 2021 - Daily Average & Rounded', width = 900, height = 200)
+barrie_chart
