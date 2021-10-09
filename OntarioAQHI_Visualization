@@ -12,7 +12,7 @@ date_aqhi['Date'] = pd.to_datetime(date_aqhi['Date'])
 date_aqhi['AQHI'] = date_aqhi.AQHI.astype(int)
 date_aqhi
 
-#4 - Create a scatterplot from Date and AQHI columns
+#4 - Create a scatterplot from 'Date' and 'AQHI' columns
 barrie_chart = alt.Chart(date_aqhi).mark_circle(color = "Darkblue", opacity=0.6).encode(
                x ='Date',
                y ='AQHI').properties(title = 'Barrie AQHI Levels 2021 - Daily Average & Rounded', width = 900, height = 200)
